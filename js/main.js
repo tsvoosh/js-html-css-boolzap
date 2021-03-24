@@ -1,8 +1,10 @@
 var app = new Vue({
     el: '#app',
     data: {
-        send_message : '',
-        current_user : 0,
+        search: '',
+        send_message: '',
+        hidden: [],
+        current_user: 0,
         contacts: [
             {
                 name: 'Michele',
@@ -87,19 +89,44 @@ var app = new Vue({
                     }
                 ],
             },
-        ]        
+        ]
     },
-    methods : {
-        submit(new_message){
-            if(new_message == '') {
+    methods: {
+        submit(new_message) {
+            if (new_message == '') {
                 return;
             }
+            let date = new Date();
+            let options = {year: 'numeric', month: '2-digit', day: '2-digit'};
             this.contacts[this.current_user].messages.push({
-                date: '10/01/2020 15:30:55',
+                date: date.toLocaleDateString(undefined, options) + ' ' + date.toLocaleTimeString(),
                 text: new_message,
                 status: 'sent'
             });
             this.send_message = '';
+            setTimeout(this.reply, 1000);
+        },
+        reply() {
+            let date = new Date();
+            let options = {year: 'numeric', month: '2-digit', day: '2-digit'};
+            this.contacts[this.current_user].messages.push({
+                date: date.toLocaleDateString(undefined, options) + ' ' + date.toLocaleTimeString(),
+                text: 'Ok',
+                status: 'received'
+            });
+        },
+        filterContacts() {
+            this.hidden = [];
+            if(this.search.length > 0) {
+                this.contacts.forEach((contact,index) => {
+                    if(!contact.name.toLowerCase().includes(this.search.toLowerCase())) {
+                        this.hidden.push(index);
+                    }
+                });
+            }
         }
     }
+
 });
+
+

@@ -45,12 +45,13 @@
                         <div class="lens">
                             <i class="fas fa-search grey-controls"></i>
                         </div>
-                        <input type="text" id="search" name="search" placeholder="Cerca o inizia una nuova chat">
+                        <input @input="filterContacts" v-model="search" type="text" id="search" name="search" placeholder="Cerca o inizia una nuova chat">
                     </div>
                 </div>
                 <div class="contacts">
                     <ul id="contacts-list">
-                        <li @click="current_user = index"
+                        <li :style="(hidden.includes(index)) ? 'display: none' : null"
+                            @click="current_user = index"
                             :class="(current_user == index) ? 'contact active-user' : 'contact'"
                             v-for="(contact,index) in contacts">
                             <img class="push-right" :src="'img/avatar' + contact.avatar + '.jpg'" alt="contact">
@@ -76,7 +77,8 @@
                     </div>
                 </div>
                 <div class="chat">
-                    <div v-for="message in contacts[current_user].messages" :class="(message.status == 'sent') ? 'message sent' : 'message received'">
+                    <div v-for="message in contacts[current_user].messages"
+                        :class="(message.status == 'sent') ? 'message sent' : 'message received'">
                         <p>{{message.text}}</p>
                         <div class="date">{{message.date}}</div>
                     </div>
@@ -85,7 +87,8 @@
                     <div class="message-icons-wrap">
                         <i class="far fa-smile message-controls"></i>
                     </div>
-                    <input v-model="send_message" v-on:keyup.enter="submit(send_message)" type="text" id="type-message" name="type-message" placeholder="Scrivi un messaggio">
+                    <input v-model="send_message" v-on:keyup.enter="submit(send_message)" type="text" id="type-message"
+                        name="type-message" placeholder="Scrivi un messaggio">
                     <div class="message-icons-wrap">
                         <i class="fas fa-microphone message-controls"></i>
                     </div>
