@@ -99,6 +99,7 @@ var app = new Vue({
                 text: new_message,
                 status: 'sent'
             });
+            this.send_message = '';
         }
     }
 });
