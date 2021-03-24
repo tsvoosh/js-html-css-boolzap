@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Boolzap</title>
+</head>
+
+<body>
+    <div id="app">
+        <div id="green-box"></div>
+        <div id="container">
+            <div id="user">
+                <div class="current-user">
+                    <div class="logged">
+                        <img class="push-right" src="img/avatar_io.jpg" alt="current user">
+                        <p>Nome Utente</p>
+                    </div>
+                    <div class="controls">
+                        <i class="fas fa-circle-notch grey-controls push-right"></i>
+                        <i class="fas fa-comment-alt grey-controls push-right"></i>
+                        <i class="fas fa-ellipsis-v grey-controls"></i>
+                    </div>
+                </div>
+                <div class="notify">
+                    <div class="bell push-right">
+                        <i class="fas fa-bell-slash"></i>
+                    </div>
+                    <div class="activate-notify">
+                        <p>Ricevi notifiche di nuovi messaggi</p>
+                        <a href="#">Attiva notifiche desktop</a>
+                    </div>
+                </div>
+                <div class="search">
+                    <div class="searchbar">
+                        <div class="lens">
+                            <i class="fas fa-search grey-controls"></i>
+                        </div>
+                        <input type="text" id="search" name="search" placeholder="Cerca o inizia una nuova chat">
+                    </div>
+                </div>
+                <div class="contacts">
+                    <ul id="contacts-list">
+                        <li @click="current_user = index"
+                            :class="(current_user == index) ? 'contact active-user' : 'contact'"
+                            v-for="(contact,index) in contacts">
+                            <img class="push-right" :src="'img/avatar' + contact.avatar + '.jpg'" alt="contact">
+                            <p>{{contact.name}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="chat">
+                <div class="current-chat">
+                    <div class="open-chat">
+                        <img class="push-right" :src="'img/avatar' + contacts[current_user].avatar + '.jpg'"
+                            alt="contact">
+                        <div class="last-seen">
+                            <p>{{contacts[current_user].name}}</p>
+                            <p id="last-seen">Ultimo accesso oggi alle 12:00</p>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <i class="fas fa-search grey-controls push-right"></i>
+                        <i class="fas fa-paperclip grey-controls push-right"></i>
+                        <i class="fas fa-ellipsis-v grey-controls"></i>
+                    </div>
+                </div>
+                <div class="chat">
+                    <div v-for="message in contacts[current_user].messages" :class="(message.status == 'sent') ? 'message sent' : 'message received'">
+                        <p>{{message.text}}</p>
+                        <div class="date">{{message.date}}</div>
+                    </div>
+                </div>
+                <div class="message-input">
+                    <div class="message-icons-wrap">
+                        <i class="far fa-smile message-controls"></i>
+                    </div>
+                    <input v-model="send_message" v-on:keyup.enter="submit(send_message)" type="text" id="type-message" name="type-message" placeholder="Scrivi un messaggio">
+                    <div class="message-icons-wrap">
+                        <i class="fas fa-microphone message-controls"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
