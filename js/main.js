@@ -1,6 +1,7 @@
 var app = new Vue({
     el: '#app',
     data: {
+        last_seen: 'Ultimo accesso oggi alle 12:00',
         deleted: [],
         closed: false,
         dropdown: false,
@@ -108,6 +109,7 @@ var app = new Vue({
                 status: 'sent'
             });
             this.send_message = '';
+            this.last_seen = this.contacts[this.current_user].name + ' sta scrivendo...';
             setTimeout(this.reply, 1000);
         },
         reply() {
@@ -118,6 +120,7 @@ var app = new Vue({
                 text: 'Ok',
                 status: 'received'
             });
+            this.last_seen = 'Ultimo accesso oggi alle 12:00';
         },
         filterContacts() {
             this.hidden = [];
