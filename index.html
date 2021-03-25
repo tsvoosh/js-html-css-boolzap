@@ -45,13 +45,13 @@
                         <div class="lens">
                             <i class="fas fa-search grey-controls"></i>
                         </div>
-                        <input @input="filterContacts" v-model="search" type="text" id="search" name="search" placeholder="Cerca o inizia una nuova chat">
+                        <input @input="filterContacts" v-model="search" type="text" id="search" name="search"
+                            placeholder="Cerca o inizia una nuova chat">
                     </div>
                 </div>
                 <div class="contacts">
                     <ul id="contacts-list">
-                        <li :style="(hidden.includes(index)) ? 'display: none' : null"
-                            @click="current_user = index"
+                        <li :style="(hidden.includes(index)) ? 'display: none' : null" @click="selectUser(index)"
                             :class="(current_user == index) ? 'contact active-user' : 'contact'"
                             v-for="(contact,index) in contacts">
                             <img class="push-right" :src="'img/avatar' + contact.avatar + '.jpg'" alt="contact">
@@ -77,18 +77,17 @@
                     </div>
                 </div>
                 <div class="chat">
-                    <div @click="showDropdown(counter)"
-                        v-for="(message,counter) in contacts[current_user].messages"
+                    <div @click="showDropdown(counter)" v-for="(message,counter) in contacts[current_user].messages"
                         :class="(message.status == 'sent') ? 'message sent' : 'message received'">
-                        <p>{{message.text}}</p>
+                        <p :style="checkIfDeleted(message)">{{message.text}}</p>
                         <div class="date">{{message.date}}</div>
-                        <div v-if="dropdown && clicked_message == counter" class="dropdown">
-                            <i @click="menu = true" class="fas fa-chevron-down"></i>
+                        <div v-if="dropdown && clicked_message == counter && !closed" class="dropdown">
+                            <i @click="close" class="fas fa-chevron-down"></i>
                         </div>
-                        <div v-if="menu && clicked_message == counter" class="dropdown-menu">
+                        <div v-if="dropdown && clicked_message == counter && !closed" class="dropdown-menu">
                             <ul>
-                                <li>Delete Message</li>
-                                <li>Close Menu</li>
+                                <li>Message info</li>
+                                <li @click="deleteMessage(counter,message)">Delete message</li>
                             </ul>
                         </div>
                     </div>

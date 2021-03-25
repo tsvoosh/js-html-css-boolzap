@@ -1,7 +1,8 @@
 var app = new Vue({
     el: '#app',
     data: {
-        menu : false,
+        deleted: [],
+        closed: false,
         dropdown: false,
         clicked_message: undefined,
         search: '',
@@ -100,7 +101,7 @@ var app = new Vue({
                 return;
             }
             let date = new Date();
-            let options = {year: 'numeric', month: '2-digit', day: '2-digit'};
+            let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
             this.contacts[this.current_user].messages.push({
                 date: date.toLocaleDateString(undefined, options) + ' ' + date.toLocaleTimeString(),
                 text: new_message,
@@ -111,7 +112,7 @@ var app = new Vue({
         },
         reply() {
             let date = new Date();
-            let options = {year: 'numeric', month: '2-digit', day: '2-digit'};
+            let options = { year: 'numeric', month: '2-digit', day: '2-digit' };
             this.contacts[this.current_user].messages.push({
                 date: date.toLocaleDateString(undefined, options) + ' ' + date.toLocaleTimeString(),
                 text: 'Ok',
@@ -120,20 +121,51 @@ var app = new Vue({
         },
         filterContacts() {
             this.hidden = [];
-            if(this.search.length > 0) {
-                this.contacts.forEach((contact,index) => {
-                    if(!contact.name.toLowerCase().includes(this.search.toLowerCase())) {
+            if (this.search.length > 0) {
+                this.contacts.forEach((contact, index) => {
+                    if (!contact.name.toLowerCase().includes(this.search.toLowerCase())) {
                         this.hidden.push(index);
                     }
                 });
             }
         },
         showDropdown(counter) {
-            this.dropdown = true;
-            this.clicked_message = counter;
+            if (this.dropdown && this.closed) {
+                this.closed = false;
+                this.dropdown = true;
+                this.clicked_message = counter;
+            } else {
+                this.dropdown = true;
+                this.clicked_message = counter;
+            }
+        },
+        close() {
+            this.closed = true;
+            this.dropdown = false;
+        },
+        selectUser(index) {
+            this.current_user = index;
+            this.dropdown = false;
+            this.closed = false;
+        },
+        deleteMessage(index, message) {
+            if (message.text == 'Questo messaggio è stato eliminato.') {
+                this.closed = true;
+                this.dropdown = false;
+                return;
+            }
+            this.closed = true;
+            this.dropdown = false;
+            this.contacts[this.current_user].messages[index].text = 'Questo messaggio è stato eliminato.';
+            this.deleted.push(message);
+        },
+        checkIfDeleted(message) {
+            if (this.deleted.includes(message)) {
+                return 'color : grey';
+            }
+            return null;
         }
     }
-
 });
 
 
