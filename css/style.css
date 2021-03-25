@@ -7,10 +7,10 @@
 body {
     width: 100%;
     height: 100vh;
-    /* min-width: 950px; */
     overflow: hidden;
     background-color: rgb(219,219,212);
     font-family: 'Lato', sans-serif;
+    word-wrap: break-word;
 }
 
 #green-box {
@@ -206,6 +206,11 @@ body {
     padding-bottom: 6px;
     border-radius: 6px;
     margin-top: 12px;
+    position: relative;
+}
+
+.message:hover {
+    cursor: pointer;
 }
 
 .message p {
@@ -252,4 +257,49 @@ body {
     align-items: center;
     padding: 12px 12px;
     background-color: rgb(243,238,234);
+}
+
+.dropdown {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+    transform: translateY(-25%); 
+}
+
+.dropdown i {
+    color: grey;
+    font-size: 0.6em;
+}
+
+.dropdown i:hover {
+    color: rgb(190, 190, 190);
+}
+
+.dropdown-menu {
+    background-color: white;
+    opacity: 0.9;
+    position: absolute;
+    top: 24px;
+    right: -12px;
+    width: 200px;
+    height: 120px;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    z-index: 1;
+}
+
+.dropdown-menu ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+.dropdown-menu ul li {
+    height: 60px;
+    line-height: 60px;
+}
+
+.dropdown-menu ul li:hover {
+    cursor: pointer;
+    background-color: rgb(211, 211, 211);
 }

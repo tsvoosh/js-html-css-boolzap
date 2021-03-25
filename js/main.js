@@ -1,6 +1,9 @@
 var app = new Vue({
     el: '#app',
     data: {
+        menu : false,
+        dropdown: false,
+        clicked_message: undefined,
         search: '',
         send_message: '',
         hidden: [],
@@ -124,6 +127,10 @@ var app = new Vue({
                     }
                 });
             }
+        },
+        showDropdown(counter) {
+            this.dropdown = true;
+            this.clicked_message = counter;
         }
     }
 

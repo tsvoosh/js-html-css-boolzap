@@ -77,10 +77,20 @@
                     </div>
                 </div>
                 <div class="chat">
-                    <div v-for="message in contacts[current_user].messages"
+                    <div @click="showDropdown(counter)"
+                        v-for="(message,counter) in contacts[current_user].messages"
                         :class="(message.status == 'sent') ? 'message sent' : 'message received'">
                         <p>{{message.text}}</p>
                         <div class="date">{{message.date}}</div>
+                        <div v-if="dropdown && clicked_message == counter" class="dropdown">
+                            <i @click="menu = true" class="fas fa-chevron-down"></i>
+                        </div>
+                        <div v-if="menu && clicked_message == counter" class="dropdown-menu">
+                            <ul>
+                                <li>Delete Message</li>
+                                <li>Close Menu</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="message-input">
