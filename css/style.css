@@ -136,7 +136,6 @@ body {
 
 .contact {
     display: flex;
-    align-items: flex-start;
     padding: 9px 12px;
     border-top: 0.5px solid rgb(233,235,235);
 }
@@ -266,7 +265,7 @@ body {
     transform: translateY(-25%); 
 }
 
-.dropdown i {
+.dropdown i{
     color: grey;
     font-size: 0.6em;
 }
@@ -302,4 +301,21 @@ body {
 .dropdown-menu ul li:hover {
     cursor: pointer;
     background-color: rgb(211, 211, 211);
+}
+
+.last-message {
+    height: 50px;
+    width: 100%;
+    text-align: end;
+}
+
+.last-message .show-last {
+    color: grey;
+    font-size: 0.8em;
+}
+
+.last-message .show-last-date {
+    color: rgb(0,150,136);
+    font-size: 0.6em;
+    margin-top: 12px;
 }

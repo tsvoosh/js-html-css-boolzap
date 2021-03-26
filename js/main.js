@@ -8,7 +8,6 @@ var app = new Vue({
         clicked_message: undefined,
         search: '',
         send_message: '',
-        hidden: [],
         current_user: 0,
         contacts: [
             {
@@ -123,14 +122,13 @@ var app = new Vue({
             this.last_seen = 'Ultimo accesso oggi alle 12:00';
         },
         filterContacts() {
-            this.hidden = [];
-            if (this.search.length > 0) {
-                this.contacts.forEach((contact, index) => {
-                    if (!contact.name.toLowerCase().includes(this.search.toLowerCase())) {
-                        this.hidden.push(index);
-                    }
-                });
-            }
+            this.contacts.forEach((contact, index) => {
+                if (!contact.name.toLowerCase().includes(this.search.toLowerCase())) {
+                    contact.visible = false;
+                } else {
+                    contact.visible = true;
+                }
+            });
         },
         showDropdown(counter) {
             if (this.dropdown && this.closed) {
@@ -167,8 +165,17 @@ var app = new Vue({
                 return 'color : grey';
             }
             return null;
+        },
+        showLastMsg(contact) {
+            let msg = contact.messages[contact.messages.length - 1].text;
+            if(msg.length > 27) {
+                return msg.substring(0,27) + '...';
+            }
+            return msg;
+        },
+        showDate(contact) {
+            let date = contact.messages[contact.messages.length - 1].status + ' ' + contact.messages[contact.messages.length - 1].date;
+            return date;
         }
     }
 });
-
-

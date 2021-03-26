@@ -51,11 +51,15 @@
                 </div>
                 <div class="contacts">
                     <ul id="contacts-list">
-                        <li :style="(hidden.includes(index)) ? 'display: none' : null" @click="selectUser(index)"
+                        <li v-if="contact.visible" @click="selectUser(index)"
                             :class="(current_user == index) ? 'contact active-user' : 'contact'"
                             v-for="(contact,index) in contacts">
                             <img class="push-right" :src="'img/avatar' + contact.avatar + '.jpg'" alt="contact">
                             <p>{{contact.name}}</p>
+                            <div class="last-message">
+                                <p class="show-last">{{showLastMsg(contact)}}</p>
+                                <p class="show-last-date">{{showDate(contact)}}</p>
+                            </div>
                         </li>
                     </ul>
                 </div>
